@@ -3,7 +3,7 @@
 Meta del día: que cfdi-copilot ya tenga **modelos tipados de un CFDI 4.0** y un **cliente LLM async**
 con timeouts explícitos, y que tengas dos números medidos. Todo con datos sintéticos.
 
-Ritmo: 3 bloques de 45 min (+10 de descanso). B4 solo si hay energía. Lo difícil (B1, B2) en la mañana.
+Ritmo: 3 bloques de 45 min (+10 de descanso). B4 (fundamentos de LLM) solo si hay energía. Lo difícil (B1, B2) en la mañana.
 
 ```
            B1 entender                 B2 aplicar                      B3 medir + 5 líneas
@@ -135,11 +135,51 @@ Notas en `docs/notas.md`, 5 líneas:
 
 ---
 
-## B4 · Si hay energía
+## B4 · Fundamentos de LLM: token, ventana de contexto y temperatura (45 min, si hay energía)
 
-- `git commit` del día (mensaje sugerido: `feat: typed CFDI 4.0 models and async LLM client`).
-- Revisar el README.
-- O usar el bloque para aplicaciones de trabajo.
+Tres conceptos que te van a preguntar en cualquier entrevista y que explican la mitad de los bugs
+de un sistema con LLM.
+
+```
+ texto ──tokenizer──▶ [Fac][tura][ CF][DI][ 4][.0] ──▶ modelo ──▶ logits ──softmax(T)──▶ siguiente token
+                       └──────── cuentan contra la ventana de contexto (prompt + respuesta) ────────┘
+```
+
+**Token.** El modelo no ve letras ni palabras, ve pedazos (BPE / SentencePiece). Regla rápida: en
+inglés ~4 caracteres por token; en español suele salir **más caro** (más tokens por la misma idea),
+y cadenas raras como un RFC o un UUID se parten en muchos tokens. Importa porque **cobras, esperas y
+te limitan por token**, no por palabra.
+
+**Ventana de contexto.** El máximo de tokens que caben en una llamada (prompt + historial + documentos
++ respuesta). Si te pasas, el proveedor de API te regresa error; **Ollama trunca en silencio** según
+`num_ctx` (por defecto unos pocos miles de tokens aunque el modelo soporte más). Por eso un RAG
+"olvida" documentos sin avisar. Más contexto también = más latencia y más costo, y los modelos usan
+peor la información que queda en medio ("lost in the middle").
+
+**Temperatura.** Escala los logits antes de muestrear: `T → 0` casi siempre elige el token más
+probable (respuestas repetibles); `T ≈ 1` muestrea más variado. Para extracción de facturas y
+evals: `T = 0`. Para lluvia de ideas: más alta. Ojo: `T = 0` no garantiza determinismo total
+(batching, GPU), por eso además validas con Pydantic.
+
+Mídelo (necesita Ollama corriendo):
+
+```bash
+uv run python scripts/day01_llm_basics.py
+```
+
+El script te da: tokens de la misma frase en español vs inglés, cuántos tokens cuesta un RFC y una
+factura sintética en JSON, y cuántas respuestas distintas salen de 5 corridas con `T=0` vs `T=1`.
+Anota los números en `docs/notas.md` (sí, también con sus 5 líneas).
+
+Si no hay energía, el B4 se usa para `git commit`, README o aplicaciones de trabajo, como siempre.
+
+Preguntas que ya contestas:
+
+- "¿Por qué tu RAG ignoró un documento que sí recuperaste?" → se cortó por la ventana de contexto
+  (`num_ctx` en Ollama) o quedó "en medio".
+- "¿Qué temperatura usas para extracción y por qué?" → 0, repetibilidad; y aun así validas la salida.
+- "¿Cómo estimas el costo de una llamada?" → tokens de entrada × precio + tokens de salida × precio
+  (la salida suele costar varias veces más).
 
 ## Para entrevista
 
