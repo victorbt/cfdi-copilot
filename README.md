@@ -1,0 +1,51 @@
+# cfdi-copilot
+
+A RAG + agent copilot for **CFDI 4.0** (Mexican electronic invoices), built in public over 8 weeks.
+It answers questions about CFDI 4.0 citing official public SAT documents, and extracts and
+validates data from **synthetic** invoices. No real taxpayer data is ever used.
+
+## Roadmap
+
+| Version | Week | What |
+|---|---|---|
+| v0 | S2 | RAG with citations over pgvector + FastAPI |
+| v1 | S3-S4 | Evals in CI + Langfuse tracing (public milestone) |
+| v2 | S5-S6 | LangGraph agent with MCP tools + guardrails (OWASP LLM Top 10) |
+| v3 | S7-S8 | AWS deploy with CDK (ECS Fargate, RDS pgvector) and measured costs |
+
+Current status: **S1 · day 1**: typed CFDI models (Pydantic v2) and an async LLM client (httpx).
+
+## Quickstart
+
+Requires [uv](https://docs.astral.sh/uv/) and, optionally, [Ollama](https://ollama.com) running locally.
+
+```bash
+uv sync                                  # creates .venv with Python 3.12 + deps
+uv run pytest                            # tests (no LLM needed)
+uv run python scripts/day01_bench.py     # validation + async benchmark (mocked LLM)
+uv run python scripts/day01_bench.py --real --calls 10   # same, against local Ollama
+```
+
+Config via env vars (see `.env.example`): `OLLAMA_BASE_URL`, `OLLAMA_MODEL` (default `qwen2.5:7b`).
+
+## Layout
+
+```
+src/cfdi_copilot/
+  models.py      CFDI 4.0 subset as frozen Pydantic v2 models (RFC, totals, IVA checks)
+  synthetic.py   deterministic synthetic invoice generator
+  llm.py         async Ollama client (one AsyncClient, explicit timeouts)
+scripts/         daily measurement scripts -> results/*.json
+tests/           pytest (+ pytest-asyncio, httpx.MockTransport)
+docs/            study notes (Spanish)
+```
+
+## Numbers
+
+Measured results get added here as the project grows (latency, cost per question, recall@k,
+faithfulness).
+
+## Data policy
+
+Only public SAT documentation and generated invoices. RFCs in this repo are random strings with a
+valid format; they do not belong to anyone.
