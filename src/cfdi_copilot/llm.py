@@ -9,7 +9,7 @@ from __future__ import annotations
 import os
 import time
 from types import TracebackType
-from typing import Self
+from typing import Any, Self
 
 import httpx
 from pydantic import BaseModel, Field
@@ -63,13 +63,23 @@ class OllamaClient:
     async def aclose(self) -> None:
         await self._http.aclose()
 
-    async def chat(self, messages: list[ChatMessage], *, temperature: float = 0.0) -> ChatResult:
-        payload = {
+    async def chat(
+        self,
+        messages: list[ChatMessage],
+        *,
+        temperature: float = 0.0,
+        json_schema: dict[str, Any] | None = None,
+    ) -> ChatResult:
+        payload: dict[str, Any] = {
             "model": self.model,
             "messages": [m.model_dump() for m in messages],
             "stream": False,
             "options": {"temperature": temperature},
         }
+        # TODO(B2): si llega json_schema, mándalo a Ollama en payload["format"].
+        #   Eso activa structured outputs: Ollama restringe la generación
+        #   a JSON que cumple el schema.
+        #   Docs: https://ollama.com/blog/structured-outputs
         start = time.perf_counter()
         response = await self._http.post("/api/chat", json=payload)
         response.raise_for_status()

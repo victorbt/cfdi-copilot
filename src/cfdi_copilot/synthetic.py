@@ -67,3 +67,30 @@ def fake_comprobante(seed: int) -> dict[str, Any]:
         "SubTotal": str(subtotal),
         "Total": str(subtotal + iva),
     }
+
+
+def render_text(raw: dict[str, Any]) -> str:
+    """Render a synthetic invoice dict as messy free text, like a pasted PDF.
+
+    This is the INPUT for /extract: the LLM has to turn it back into a Comprobante.
+    """
+    e, r = raw["Emisor"], raw["Receptor"]
+    lines = [
+        f"FACTURA {raw.get('Serie', '')}-{raw.get('Folio', '')}   CFDI versión 4.0",
+        f"Tipo de comprobante: {raw['TipoDeComprobante']} (Ingreso)   Moneda: MXN",
+        f"Lugar de expedición (CP): {raw['LugarExpedicion']}",
+        "",
+        f"EMISOR: {e['Nombre']}  RFC {e['Rfc']}  Régimen fiscal {e['RegimenFiscal']}",
+        f"RECEPTOR: {r['Nombre']}  RFC: {r['Rfc']}",
+        f"   Domicilio fiscal CP {r['DomicilioFiscalReceptor']}, "
+        f"régimen {r['RegimenFiscalReceptor']}, uso CFDI {r['UsoCFDI']}",
+        "",
+        "CONCEPTOS",
+    ]
+    for c in raw["Conceptos"]:
+        lines.append(
+            f" - [{c['ClaveProdServ']}] {c['Descripcion']}  cant. {c['Cantidad']}  "
+            f"x ${c['ValorUnitario']}  (IVA 16%)"
+        )
+    lines += ["", f"Subtotal: ${raw['SubTotal']}", f"TOTAL: ${raw['Total']}"]
+    return "\n".join(lines)
