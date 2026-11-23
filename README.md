@@ -13,7 +13,15 @@ validates data from **synthetic** invoices. No real taxpayer data is ever used.
 | v2 | S5-S6 | LangGraph agent with MCP tools + guardrails (OWASP LLM Top 10) |
 | v3 | S7-S8 | AWS deploy with CDK (ECS Fargate, RDS pgvector) and measured costs |
 
-Current status: **S1 · day 1**: typed CFDI models (Pydantic v2) and an async LLM client (httpx).
+Current status: **week 1**. Typed CFDI models (Pydantic v2) and an async LLM client (httpx) are done;
+`POST /extract` is a skeleton with failing tests waiting to be implemented.
+
+## Design docs
+
+The system is designed before it is coded. [`docs/diseno/`](docs/diseno/README.md) (in Spanish)
+explains what each piece does and how data flows between them, with diagrams: the CFDI domain model,
+the architecture, the `/extract` flow step by step, RAG, the agent and MCP, security, the data model,
+evals and deployment. Each decision is logged with the alternative it beat and the cost it accepts.
 
 ## Quickstart
 
@@ -35,9 +43,12 @@ src/cfdi_copilot/
   models.py      CFDI 4.0 subset as frozen Pydantic v2 models (RFC, totals, IVA checks)
   synthetic.py   deterministic synthetic invoice generator
   llm.py         async Ollama client (one AsyncClient, explicit timeouts)
+  extract.py     LLM extraction use case (skeleton, week 1)
+  api.py         FastAPI app factory and POST /extract (skeleton, week 1)
 scripts/         daily measurement scripts -> results/*.json
 tests/           pytest (+ pytest-asyncio, httpx.MockTransport)
-docs/            study notes (Spanish)
+docs/diseno/     system design: flows, entities and decisions (Spanish)
+docs/semana-NN/  weekly study notes (Spanish)
 ```
 
 ## Numbers
