@@ -1,7 +1,7 @@
 # 10 · Decisiones
 
 > **Estado:** vivo · se agrega una fila cada vez que se elige algo · **Lectura:** de consulta ·
-> [Índice](README.md) · Anterior: [09 · Producción y AWS](09-produccion-y-aws.md) · Siguiente: [Glosario](glosario.md)
+> [Índice](README.md) · Anterior: [09 · Producción y AWS](09-produccion-y-aws.md) · Siguiente: [11 · Entorno local](11-entorno-local.md)
 
 Cada fila dice qué se eligió, en lugar de qué, por qué y **qué se sacrificó**. Una decisión sin
 costo aceptado no es una decisión: es una preferencia.
@@ -77,6 +77,7 @@ Las decisiones que todavía no se toman están al final de los documentos
 | **D29** · Versión del corpus y del prompt dentro de la llave de caché | Borrar la caché a mano cuando algo cambia | Las entradas viejas dejan de coincidir solas | Tras cada cambio la caché arranca vacía | Planeada · semana 7 |
 | **D30** · Fargate y RDS, sin NAT Gateway | Subredes privadas con NAT, o *VPC endpoints* | El contenedor necesita salir a internet y el NAT se cobra por hora | La tarea tiene IP pública, protegida por su *security group* | Planeada · semana 8 |
 | **D31** · Desplegar, medir y destruir el mismo día | Dejar el servicio prendido | El objetivo es un costo real medido, no una demo permanente | No queda una URL pública que enseñar | Planeada · semana 8 |
+| **D32** · Todo en una sola máquina hasta la semana 7 | Repartir los servicios entre dos equipos, o desarrollar contra la nube | Un solo lugar donde levantar, depurar y medir, sin costo y sin red de por medio | El modelo local queda limitado por la memoria de esa máquina | Vigente |
 
 ## Cómo se agrega una decisión
 

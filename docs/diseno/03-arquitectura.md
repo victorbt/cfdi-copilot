@@ -180,6 +180,9 @@ Los nombres en gris (`rag/`, `agent/`, `db/`, `obs/`, `security/`, `mcp_server/`
 Regla del proyecto: **Ollama solo se usa para desarrollar**. No sirve como juez de evals ni para
 reportar métricas, porque un modelo local chico no representa lo que correría en producción.
 
+El detalle del entorno de desarrollo (qué proceso corre, en qué puerto y cuánta memoria pide) está
+en [11 · Entorno local](11-entorno-local.md).
+
 ## Endpoints
 
 | Ruta | Entrada | Salida | Errores propios | Llega en |

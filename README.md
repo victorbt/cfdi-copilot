@@ -36,6 +36,10 @@ uv run python scripts/day01_bench.py --real --calls 10   # same, against local O
 
 Config via env vars (see `.env.example`): `OLLAMA_BASE_URL`, `OLLAMA_MODEL` (default `qwen2.5:7b`).
 
+Everything runs on one machine until week 7; nothing is deployed before week 8.
+[`docs/diseno/11-entorno-local.md`](docs/diseno/11-entorno-local.md) (in Spanish) lists what runs locally,
+on which port and with how much memory.
+
 ## Layout
 
 ```
