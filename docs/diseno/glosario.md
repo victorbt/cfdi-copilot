@@ -1,6 +1,6 @@
 # Glosario
 
-> **Estado:** vivo · **Lectura:** de consulta · [Índice](README.md) · Anterior: [10 · Decisiones](10-decisiones.md)
+> **Estado:** vivo · **Lectura:** de consulta · [Índice](README.md) · Anterior: [11 · Entorno local](11-entorno-local.md)
 
 Una línea por término, agrupados por tema. La última columna dice en qué documento se explica con
 calma.

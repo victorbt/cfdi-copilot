@@ -94,11 +94,12 @@ Los 60 tests de modelos y cliente pasan sin LLM ni base de datos (`uv run pytest
 | 3 | [02 · Dominio CFDI](02-dominio-cfdi.md) | ¿Qué es un CFDI y qué parte modelamos? | 10 | tocar `models.py` |
 | 4 | [03 · Arquitectura](03-arquitectura.md) | ¿Qué componentes hay y quién habla con quién? | 10 | programar cualquier módulo |
 | 5 | [04 · Flujo de `/extract`](04-flujo-extract.md) | ¿Qué pasa, paso a paso, al extraer una factura? | 15 | la semana 1 |
-| 6 | [08 · Evals y observabilidad](08-evals-y-observabilidad.md) | ¿Cómo sabemos qué pasó y qué tan bueno es? | 10 | conectar Langfuse (semana 1) y la semana 3 |
-| 7 | [07 · Modelo de datos](07-modelo-de-datos.md) | ¿Qué tablas hay y qué garantiza cada transacción? | 10 | el cierre de la semana 1 |
-| 8 | [05 · Flujos de RAG](05-flujos-rag.md) | ¿Cómo se indexan los documentos y cómo se responde con citas? | 15 | la semana 2 |
-| 9 | [06 · Agente, MCP y seguridad](06-agente-mcp-y-seguridad.md) | ¿Cuándo decide el LLM y cómo se le ponen límites? | 15 | la semana 5 |
-| 10 | [09 · Producción y AWS](09-produccion-y-aws.md) | ¿Cómo se controla costo y latencia y cómo se despliega? | 10 | la semana 7 |
+| 6 | [11 · Entorno local](11-entorno-local.md) | ¿Qué corre en mi máquina, cuánta memoria pide y qué queda fuera? | 5 | levantar Ollama o la base por primera vez |
+| 7 | [08 · Evals y observabilidad](08-evals-y-observabilidad.md) | ¿Cómo sabemos qué pasó y qué tan bueno es? | 10 | conectar Langfuse (semana 1) y la semana 3 |
+| 8 | [07 · Modelo de datos](07-modelo-de-datos.md) | ¿Qué tablas hay y qué garantiza cada transacción? | 10 | el cierre de la semana 1 |
+| 9 | [05 · Flujos de RAG](05-flujos-rag.md) | ¿Cómo se indexan los documentos y cómo se responde con citas? | 15 | la semana 2 |
+| 10 | [06 · Agente, MCP y seguridad](06-agente-mcp-y-seguridad.md) | ¿Cuándo decide el LLM y cómo se le ponen límites? | 15 | la semana 5 |
+| 11 | [09 · Producción y AWS](09-produccion-y-aws.md) | ¿Cómo se controla costo y latencia y cómo se despliega? | 10 | la semana 7 |
 | — | [10 · Decisiones](10-decisiones.md) | ¿Por qué se eligió cada cosa y qué se sacrificó? | consulta | defender el diseño |
 | — | [Glosario](glosario.md) | ¿Qué significa este término? | consulta | — |
 
