@@ -4,6 +4,9 @@ Meta: mandas el texto de una factura sintética y regresa un `Comprobante` valid
 Tú escribes el código. Los tests de `tests/test_api.py` ya están escritos y hoy fallan (6 en rojo).
 Tu trabajo es ponerlos en verde.
 
+Antes de programar, lee el flujo completo en [docs/diseno/04-flujo-extract.md](../diseno/04-flujo-extract.md):
+ahí está cada paso numerado y en qué archivo cae cada `TODO`.
+
 ```
  texto factura ──▶ POST /extract ──▶ ExtractRequest (≤20k chars)
                         │
